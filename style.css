@@ -1,0 +1,42 @@
+body {
+	font-family: 'Helvetica Neue';
+	margin: 0;
+	background-image: url("background.jpg");
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-color: Grey;
+}
+
+.container {
+	margin: 0 auto 0 auto;
+	height: 60em;
+	padding: 1em;
+}
+
+#hero {
+	text-align: center;
+	color: White;
+}
+
+#hero h1 {
+	font-size: 64px;
+}
+
+#login {
+	width: 20em;
+	margin: 5em auto 0 auto;
+	padding: 0.5em;
+	text-align: center;
+	background-color: Azure;
+}
+
+.error {
+	display: none;
+	color: red;
+	font-size: 0.75em;
+}
+
+.input-line {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
