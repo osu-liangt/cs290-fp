@@ -30,9 +30,12 @@ if (!$mysqli->query("DROP TABLE IF EXISTS sims") ||
 			id INT PRIMARY KEY AUTO_INCREMENT,
 			author VARCHAR(255) NOT NULL,
 			address VARCHAR(255) NOT NULL,
-			annual_usage DOUBLE(5,2) NOT NULL,
-			rate DOUBLE(5,2) NOT NULL,
-			size DOUBLE(5,2) NOT NULL
+			annual_usage DOUBLE(10,2) NOT NULL,
+			rate DOUBLE(10,2) NOT NULL,
+			size DOUBLE(10,2) NOT NULL,
+			oldbill DOUBLE(10,2) NOT NULL,
+			newbill DOUBLE(10,2) NOT NULL,
+			savings DOUBLE(10,2) NOT NULL
 		)")) {
 	echo "Table creation failed: (" . $mysqli->errno . ") " . $mysqli->error;
 }
