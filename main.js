@@ -2,8 +2,8 @@ function errorHandler(responseObject) {
 
 	var noUsernameMessage = document.getElementById("no-username");
 	var noPasswordMessage = document.getElementById("no-password");
-	var usernameTakenMessage = document.getElementById("username-taken");
 	var badPasswordLengthMessage = document.getElementById("bad-password-length");
+	var wrongTakenMessage = document.getElementById("wrong-pass-taken-username");
 
 	var badInput = false;
 
@@ -23,12 +23,12 @@ function errorHandler(responseObject) {
 		noPasswordMessage.style.display = "none";
 	}
 
-	if ("usernameTaken" in responseObject) {
-		usernameTakenMessage.style.display = "block";
+	if ("wrongOrTaken" in responseObject) {
+		wrongTakenMessage.style.display = "block";
 		badInput = true;
 	}
 	else {
-		usernameTakenMessage.style.display = "none";
+		wrongTakenMessage.style.display = "none";
 	}
 
 	if ("badPasswordLength" in responseObject) {

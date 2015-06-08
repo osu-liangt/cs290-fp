@@ -1,3 +1,11 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+header('Content-Type: text/html');
+
+session_start();
+$_SESSION["mainVisited"] = true;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,13 +27,13 @@
 						<label for="username-input">Username:</label>
 						<input type="text" id="username-input" name="username">
 						<div id="no-username" class="error">Please enter a username</div>
-						<div id="username-taken" class="error">Username already taken</div>
 					</div>
 					<div id="password" class="input-line">
 						<label for="password-input">Password:</label>
 						<input type="password" id="password-input" name="password">
 						<div id="no-password" class="error">Please enter a password</div>
 						<div id="bad-password-length" class="error">Password must be between 12 and 32 characters</div>
+						<div id="wrong-pass-taken-username" class="error">Wrong password, or if you're trying to register, that username is already taken</div>
 					</div>
 					<input type="submit" id="submit" value="Submit">
 			</form>
