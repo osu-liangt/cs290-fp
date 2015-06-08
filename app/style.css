@@ -1,0 +1,21 @@
+body {
+	font-family: 'Helvetica Neue';
+	margin: 0;
+}
+
+.container {
+	margin: 0 auto 0 auto;
+	width: 60em;
+	padding: 1em;
+}
+
+.error {
+	display: none;
+	color: red;
+	font-size: 0.75em;
+}
+
+.input-line {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}

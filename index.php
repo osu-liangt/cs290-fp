@@ -4,6 +4,9 @@ ini_set('display_errors', 1);
 header('Content-Type: text/html');
 
 session_start();
+if (isset($_SESSION["username"])) {
+	header('Location: /~liangt/290/fp/app');
+}
 $_SESSION["mainVisited"] = true;
 ?>
 <!DOCTYPE html>

@@ -1,15 +1,16 @@
 function errorHandler(responseObject) {
 
+	if ("goodInputs" in responseObject) {
+		window.location = "/~liangt/290/fp/app";
+	}
+
 	var noUsernameMessage = document.getElementById("no-username");
 	var noPasswordMessage = document.getElementById("no-password");
 	var badPasswordLengthMessage = document.getElementById("bad-password-length");
 	var wrongTakenMessage = document.getElementById("wrong-pass-taken-username");
 
-	var badInput = false;
-
 	if ("noUsername" in responseObject) {
 		noUsernameMessage.style.display = "block";
-		badInput = true;
 	}
 	else {
 		noUsernameMessage.style.display = "none";
@@ -17,7 +18,6 @@ function errorHandler(responseObject) {
 
 	if ("noPassword" in responseObject) {
 		noPasswordMessage.style.display = "block";
-		badInput = true;
 	}
 	else {
 		noPasswordMessage.style.display = "none";
@@ -25,7 +25,6 @@ function errorHandler(responseObject) {
 
 	if ("wrongOrTaken" in responseObject) {
 		wrongTakenMessage.style.display = "block";
-		badInput = true;
 	}
 	else {
 		wrongTakenMessage.style.display = "none";
@@ -33,14 +32,9 @@ function errorHandler(responseObject) {
 
 	if ("badPasswordLength" in responseObject) {
 		badPasswordLengthMessage.style.display = "block";
-		badInput = true;
 	}
 	else {
 		badPasswordLengthMessage.style.display = "none";
-	}
-
-	if (!badInput) {
-		window.location = "/~liangt/290/fp/app";
 	}
 }
 

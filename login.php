@@ -23,33 +23,92 @@ if ($mysqli->connect_errno) {
 $username = $_POST["username"];
 $password = $_POST["password"];
 
-$_SESSION["username"] = $username;
-$_SESSION["password"] = $password;
+// TODO: HASH AND MAYBE SALT PASSWORD
 
 $response = array();
 
-if (empty($username)) {
-	$response["noUsername"] = true;
-}
+$badPassword = false;
 
 if (empty($password)) {
 	$response["noPassword"] = true;
-}
-
-// Check if username already there
-	//if so, check if password is good
-		//if so, return a ok response
-	//if not, wrong password or username already taken
-
-
-$taken = "george";
-
-if ($username == $taken) {
-	$response["wrongOrTaken"] = true;
+	$badPassword = true;
 }
 
 if (strlen($password) < 12 || strlen($password) > 32) {
 	$response["badPasswordLength"] = true;
+	$badPassword = true;
+}
+
+if (empty($username)) {
+	$response["noUsername"] = true;
+}
+else {
+	// Check if username already there
+	//if so, check if password is good
+		//if so, return a ok response
+	//if not, wrong password or username already taken
+	// If username not there, add if password is good
+
+	// Prepare statement
+	if (!($checkUsername = $mysqli->prepare(
+		"SELECT username, password
+		FROM users
+		WHERE username = ?"))) {
+		    echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+	}
+
+	// Bind parameters
+	if (!$checkUsername->bind_param("s", $username)) {
+  	echo "Binding parameters failed: (" . $checkUsername->errno . ") " .
+  		$checkUsername->error;
+	}
+
+	// Execute statement
+	if (!$checkUsername->execute()) {
+   	echo "Execute failed: (" . $checkUsername->errno . ") " .
+   		$checkUsername->error;
+	}
+
+	// Bind result
+	if (!($checkUsername->bind_result(
+		$existing_username, $existing_password))) {
+	    echo "Binding results failed: (" . $checkUsername->errno . ") " .
+	    	$checkUsername->error;
+	}
+
+	if ($checkUsername->fetch()) {
+		//username exists
+		if ($password == $existing_password) {
+			$response["goodInputs"] = true;
+			$_SESSION["username"] = $username;
+		}
+		else {
+			$response["wrongOrTaken"] = true;
+		}
+	}
+	else {
+		//username not taken
+		if (!$badPassword) {
+			// Add to database
+			if (!($addUser = $mysqli->prepare(
+				"INSERT INTO users(username, password)
+				VALUES (?, ?)"))) {
+				    echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+			}
+			if (!$addUser->bind_param("ss", $username, $password)) {
+		  	echo "Binding parameters failed: (" . $addUser->errno . ") " .
+		  		$addUser->error;
+			}
+			if (!$addUser->execute()) {
+	    	echo "Execute failed: (" . $addUser->errno . ") " .
+	    		$addUser->error;
+			}
+			$addUser->close();
+			$response["goodInputs"] = true;
+			$_SESSION["username"] = $username;
+		}
+	}
+	$checkUsername->close();
 }
 
 echo json_encode($response);
