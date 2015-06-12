@@ -3,6 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 header('Content-Type: text/plain');
 
+session_save_path('/nfs/stak/students/l/liangt/php_sessions');
 session_start();
 
 if (!isset($_SESSION["mainVisited"]) || count($_POST) == 0) {
